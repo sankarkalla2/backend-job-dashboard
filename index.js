@@ -9,12 +9,7 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
-app.use(cors({
-    origin: [process.env.NEXT_PUBLIC_APP_URL],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true // if you need to send cookies
-}));
+app.use(cors());
 
 app.get("/jobs", authenticateToken, async (req, res) => {
     try {
@@ -134,10 +129,15 @@ app.post('/login', async (req, res) => {
     }
 });
 
+// Important: Use process.env.PORT for Vercel
+const PORT = process.env.PORT || 3000;
 
+// For Vercel, export the express app
+export default app;
 
-
-
-app.listen(5000, () => {
-    console.log("Server is running on port 5000");
-});
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
