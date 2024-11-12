@@ -34,7 +34,7 @@ app.post('/jobs', authenticateToken, async (req, res) => {
                 userId: req.user.userId
             },
         });
-        res.json(job).status(200);
+        res.status(200).json(job);
     } catch (error) {
         res.status(500).json({ error: 'Error creating user' });
     }
@@ -49,7 +49,7 @@ app.patch('/jobs/:id', authenticateToken, async (req, res) => {
             where: { id: id },
             data: { status, name },
         });
-        res.json(user).status(200);
+        res.status(200).json(user);
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Error updating user' });
@@ -89,9 +89,9 @@ app.post('/register', async (req, res) => {
             { expiresIn: '24h' }
         );
 
-        res.json({ token, user: { id: user.id, email: user.email, name: user.name } });
+        return res.json({ token, user: { id: user.id, email: user.email, name: user.name } });
     } catch (error) {
-        res.status(500).json({ error: 'Error creating user' });
+        return res.status(500).json({ error: 'Error creating user' });
     }
 });
 
@@ -123,9 +123,9 @@ app.post('/login', async (req, res) => {
             { expiresIn: '24h' }
         );
 
-        res.json({ token, user: { id: user.id, email: user.email, name: user.name } });
+        return res.json({ token, user: { id: user.id, email: user.email, name: user.name } });
     } catch (error) {
-        res.status(500).json({ error: 'Error logging in' });
+        return res.status(500).json({ error: 'Error logging in' });
     }
 });
 
