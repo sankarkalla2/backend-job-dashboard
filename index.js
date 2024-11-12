@@ -135,9 +135,7 @@ const PORT = process.env.PORT || 3000;
 // For Vercel, export the express app
 export default app;
 
-// For local development
-if (process.env.NODE_ENV !== 'production') {
-  app.listen(PORT, () => {
+
+app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
-  });
-}
+});
